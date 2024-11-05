@@ -1,12 +1,21 @@
 #  File: GraphFill.py
+
 #  Description:
-#  Student Name:
-#  Student UT EID:
-#  Partner Name:
+
+#  Student Name: Trinity Thompson
+
+#  Student UT EID: tyt242
+
+#  Partner Name: Marissa Shuchart
+
 #  Partner UT EID:
+
 #  Course Name: CS 313E
+
 #  Unique Number:
+
 #  Date Created:
+
 #  Date Last Modified:
 
 import os
