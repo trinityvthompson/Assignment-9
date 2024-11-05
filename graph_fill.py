@@ -8,15 +8,15 @@
 
 #  Partner Name: Marissa Shuchart
 
-#  Partner UT EID:
+#  Partner UT EID: ms87339
 
 #  Course Name: CS 313E
 
-#  Unique Number:
+#  Unique Number: 50165
 
-#  Date Created:
+#  Date Created: 11.07.2024
 
-#  Date Last Modified:
+#  Date Last Modified: 11.07.2024
 
 import os
 import sys
