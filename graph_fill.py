@@ -182,7 +182,7 @@ class ImageGraph:
               matrix[edge][node.index] = 1
 
         for row in matrix:
-           print("".join(map(str, row)))
+           print(" ".join(map(str, row)))
 
         # empty line afterwards
         print()
