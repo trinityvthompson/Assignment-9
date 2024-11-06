@@ -168,9 +168,19 @@ class ImageGraph:
     # implement your adjacency matrix printing here.
     def print_adjacency_matrix(self):
         print("Adjacency matrix:")
+        
+        # Create a matrix initialized with 0s
+        matrix = [[0] * len(self.nodes) for _ in range(len(self.nodes))]
+        
+        # Fill in the matrix with edges
+        for node in self.nodes:
+            for edge in node.edges:
+                matrix[node.index][edge] = 1
+                matrix[edge][node.index] = 1  # Since it's undirected
 
-        raise NotImplementedError("Remove this exception and print the adjacency matrix here.")
-
+        # Print the matrix
+        for row in matrix:
+            print("".join(map(str, row)))
         # empty line afterwards
         print()
 
