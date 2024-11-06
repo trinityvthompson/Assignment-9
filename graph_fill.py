@@ -167,6 +167,7 @@ class ImageGraph:
 
     # implement your adjacency matrix printing here.
     def print_adjacency_matrix(self):
+        """"Prints an adjacency matrix and shows whether an edge exists between a pair of nodes."""
         print("Adjacency matrix:")
 
         # Initializes the matrix with 0s, each row and column represents a node in the graph.
@@ -181,7 +182,7 @@ class ImageGraph:
               matrix[edge][node.index] = 1
 
         for row in matrix:
-           print(" ".join(map(str, row)))
+           print("".join(map(str, row)))
 
         # empty line afterwards
         print()
@@ -191,28 +192,60 @@ class ImageGraph:
     #   start_index is the index of the currently visited node
     #   color is the color to fill the area containing the current node with
     def bfs(self, start_index, color):
+        """Breadth-first explores each level of neighbors before moving onto next level."""
         # reset visited status
         self.reset_visited()
         # print initial state
         print("Starting BFS; initial state:")
         self.print_image()
 
-        raise NotImplementedError("Remove this exception and implement the bfs algorithm here.")
+        # Initialize queue to track nodes visiting
+        queue = Queue()
+        queue.enqueue(start_index)
+        # Mark node as visited and set its color
+        self.nodes[start_index].visit_and_set_color(color)
+        self.print_image()
 
+        # Continue until the queue is empty
+        while not queue.is_empty():
+           current = queue.dequeue()
+           # For each node dequeued, check neighbor
+           # If neighbor has not been visited, color it, mark as visit, print, and enqueue
+           for neighbor in self.nodes[current].edges:
+              if not self.nodes[neighbor].visited:
+                 self.nodes[neighbor].visit_and_set_color(color)
+                 self.print_image()
+                 queue.enqueue(neighbor)
 
     # implement your dfs algorithm here. Call print_image() after coloring a node
     # Input: graph is the graph containing the nodes
     #   start_index is the index of the currently visited node
     #   color is the color to fill the area containing the current node with
     def dfs(self, start_index, color):
+        """Depth-first explores as deep as possible in one branch before backtracking."""
         # reset visited status
         self.reset_visited()
         # print initial state
         print("Starting DFS; initial state:")
         self.print_image()
 
-        raise NotImplementedError("Remove this exception and implement the dfs algorithm here.")
+        # Initialize stack to keep track of nodes visited
+        # Uses stack because follows LIFO
+        stack = Stack()
+        # Color start node and add to stack
+        stack.push(start_index)
+        self.nodes[start_index].visit_and_set_color(color)
+        self.print_image()
 
+        # Continue until stack is empty
+        # Pop a node and check its neighbors to make sure has been visited
+        # If hasn't been visited, color, print, and push onto stack
+        while not stack.is_empty():
+           current = stack.pop()
+           for neighbor in self.nodes[current].edges:
+              self.nodes[neighbor].visit_and_set_color(color)
+              self.print_image()
+              stack.push(neighbor)
 
 def create_graph(data):
     # creates graph from read in data
