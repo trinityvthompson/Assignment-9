@@ -194,12 +194,35 @@ class ImageGraph:
     def bfs(self, start_index, color):
         # reset visited status
         self.reset_visited()
+
+        # intialize queue with the starting node and mark it as visited
+        queue = Queue()
+        queue.enqueue(start_index)
+        self.nodes[start_index].visited = True
+        self.nodes[start_index].visit_and_set_color(color) # set the start node's color
+
         # print initial state
         print("Starting BFS; initial state:")
         self.print_image()
 
-        raise NotImplementedError("Remove this exception and implement the bfs algorithm here.")
+        # countinue until all reachable nodes are processed
+        while not queue.is_empty():
+            # get the next node in the queue
+            current_index = queue.dequeue()
+            current_node = self.nodes[current_index]
 
+            # check each neighbor of the current node
+            for neighbor_index in current_node.edges:
+                neighbor_node = self.nodes[neighbor_index]
+
+                # Process unvisited neighbors only
+                if not neighbor_node.visited:
+                    neighbor_node.visited = True # mark as visited
+                    neighbor_node.visit_and_set_color(color) # set neighbor's color 
+                    queue.enqueue(neighbor_index) # add neighbor to queue for further exploration
+
+                    # print image after each node is colored and processed
+                    self.print_image()
 
     # implement your dfs algorithm here. Call print_image() after coloring a node
     # Input: graph is the graph containing the nodes
