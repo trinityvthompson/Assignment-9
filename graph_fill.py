@@ -1,4 +1,5 @@
-#  File: GraphFill.py
+"""
+# File: GraphFill.py
 
 #  Description:
 
@@ -17,6 +18,7 @@
 #  Date Created: 11.07.2024
 
 #  Date Last Modified: 11.07.2024
+"""
 
 import os
 import sys
@@ -61,58 +63,59 @@ def print_block(color):
 
 
 # Stack class; you can use this for your search algorithms
-class Stack(object):
-  def __init__(self):
-    self.stack = []
+class Stack():
+    def __init__(self):
+        self.stack = []
 
   # add an item to the top of the stack
-  def push(self, item):
-    self.stack.append(item)
+    def push(self, item):
+        self.stack.append(item)
 
   # remove an item from the top of the stack
-  def pop(self):
-    return self.stack.pop()
+    def pop(self):
+        return self.stack.pop()
 
   # check the item on the top of the stack
-  def peek(self):
-    return self.stack[-1]
+    def peek(self):
+        return self.stack[-1]
 
   # check if the stack if empty
-  def is_empty(self):
-    return len(self.stack) == 0
+    def is_empty(self):
+        return len(self.stack) == 0
 
   # return the number of elements in the stack
-  def size(self):
-    return len(self.stack)
+    def size(self):
+        return len(self.stack)
 
 # Queue class; you can use this for your search algorithms
-class Queue(object):
-  def __init__(self):
-    self.queue = []
+class Queue():
+    def __init__(self):
+        self.queue = []
 
   # add an item to the end of the queue
-  def enqueue(self, item):
-    self.queue.append(item)
+    def enqueue(self, item):
+        self.queue.append(item)
 
   # remove an item from the beginning of the queue
-  def dequeue(self):
-    return self.queue.pop(0)
+    def dequeue(self):
+        return self.queue.pop(0)
 
   # checks the item at the top of the Queue
-  def peek(self):
-    return self.queue[0]
+    def peek(self):
+        return self.queue[0]
 
   # check if the queue is empty
-  def is_empty(self):
-    return len(self.queue) == 0
+    def is_empty(self):
+        return len(self.queue) == 0
 
   # return the size of the queue
-  def size(self):
-    return len(self.queue)
+    def size(self):
+        return len(self.queue)
 
 # class for a graph node; contains x and y coordinates, a color, a list of edges and
 # a flag signaling if the node has been visited (useful for serach algorithms)
-# it also contains a "previous color" attribute. This might be useful for your flood fill implementation.
+# it also contains a "previous color" attribute. 
+# This might be useful for your flood fill implementation.
 class ColorNode:
     # Input: x, y are the location of this pixel in the image
     #   color is the name of a color
@@ -131,7 +134,7 @@ class ColorNode:
         self.edges.append(node_index)
 
     # Input: color is the name of the color the node should be colored in;
-    # the function also saves the previous color (might be useful for your flood fill implementation)
+    # the function also saves the previous color, might be useful for your flood fill implementation
     def visit_and_set_color(self, color):
         self.visited = True
         self.prev_color = self.color
@@ -225,7 +228,7 @@ def create_graph(data):
     index = 2
 
     # create nodes
-    for i in range(node_count):
+    for _ in range(node_count):
         # node info has the format "x,y,color"
         node_info = data_list[index].split(",")
         new_node = ColorNode(len(graph.nodes), int(node_info[0]), int(node_info[1]), node_info[2])
