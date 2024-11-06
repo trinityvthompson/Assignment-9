@@ -198,7 +198,25 @@ class ImageGraph:
         print("Starting BFS; initial state:")
         self.print_image()
 
-        raise NotImplementedError("Remove this exception and implement the bfs algorithm here.")
+        queue = Queue()
+        queue.enqueue(start_index)
+        self.nodes[start_index].visit_and_set_color(color)  # Color and mark as visited
+        self.print_image()
+
+        # BFS traversal
+        while not queue.is_empty():
+            current = queue.dequeue()
+
+            # Skip visiting the node if it does not match the target color
+            if self.nodes[current].color != color:
+                continue
+
+            for neighbor in self.nodes[current].edges:
+                if not self.nodes[neighbor].visited and self.nodes[neighbor].color == color:
+                    # Visit and color the neighbor only if it matches the target color
+                    self.nodes[neighbor].visit_and_set_color(color)
+                    self.print_image()
+                    queue.enqueue(neighbor)
 
 
     # implement your dfs algorithm here. Call print_image() after coloring a node
@@ -212,8 +230,25 @@ class ImageGraph:
         print("Starting DFS; initial state:")
         self.print_image()
 
-        raise NotImplementedError("Remove this exception and implement the dfs algorithm here.")
+        stack = Stack()
+        stack.push(start_index)
+        self.nodes[start_index].visit_and_set_color(color)  # Color and mark as visited
+        self.print_image()
 
+        # DFS traversal
+        while not stack.is_empty():
+            current = stack.pop()
+
+            # Skip visiting the node if it does not match the target color
+            if self.nodes[current].color != color:
+                continue
+
+            for neighbor in self.nodes[current].edges:
+                if not self.nodes[neighbor].visited and self.nodes[neighbor].color == color:
+                    # Visit and color the neighbor only if it matches the target color
+                    self.nodes[neighbor].visit_and_set_color(color)
+                    self.print_image()
+                    stack.push(neighbor)
 
 def create_graph(data):
     # creates graph from read in data
