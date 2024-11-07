@@ -239,12 +239,9 @@ class ImageGraph:
 
         stack = Stack()
         stack.push(start_index)
-
-        initial_node = self.nodes[start_index]
-        initial_node.visited = True
-        if initial_node.color == color:
-          initial_node.visit_and_set_color(color)  # Color and mark as visited
-          self.print_image()
+        self.nodes[start_index].visited = True
+        self.nodes[start_index].visit_and_set_color(color)  # Color and mark as visited
+        self.print_image()
 
         # DFS traversal
         while not stack.is_empty():
@@ -256,14 +253,11 @@ class ImageGraph:
                 neighbor_node = self.nodes[neighbor]
 
                 # Skip visiting the node if it does not match the target color
-                if not neighbor_node.visited:
-                  neighbor_node.visited = True
-                  stack.push(neighbor)
-                  
-                  if neighbor_node.color == target_color:
+                if not neighbor_node.visited and neighbor_node.color == target_color:
                     # Visit and color the neighbor only if it matches the target color
-                    neighbor_node.visit_and_set_color(color)
+                    self.nodes[neighbor].visit_and_set_color(color)
                     self.print_image()
+                    stack.push(neighbor)
 
 def create_graph(data):
     # creates graph from read in data
