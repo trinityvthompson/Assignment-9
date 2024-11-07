@@ -246,40 +246,50 @@ class ImageGraph:
     def dfs(self, start_index, color):
         """Performs a depth-first search (DPS) starting from the given node index.
         It colors the connected nodes with the target color."""
-        # reset visited status
+
+        # reset visited status for all nodes before starting DFS
         self.reset_visited()
 
-        # Define target color 
+        # Define the color of the starting node as the target color
         target_color = self.nodes[start_index].color
+
+        # Skip if the start node is already the target color 
+        if target_color == color:
+            return 
 
         # print initial state
         print("Starting DFS; initial state:")
         self.print_image()
 
-        # Stack used for DFS due to LIFO nature
+        # Initialize the stack and start with the given node (# Stack used for DFS due to LIFO nature)
         stack = Stack()
         stack.push(start_index)
 
-        # Mark the following node as visited and set its color 
+        # Mark the following node as visited and change its color 
         self.nodes[start_index].visited = True
         self.nodes[start_index].visit_and_set_color(color)
-        self.print_image()
 
         # DFS traversal
         while not stack.is_empty():
+            # Pop the current node from the stack 
             current = stack.pop()
             current_node = self.nodes[current]
 
+            # Traverse each neighbor of the current node 
             for neighbor in current_node.edges:
                 neighbor_node = self.nodes[neighbor]
-                # Skip visiting the node if it does not match the target color
-                # Continue with DFS if neighbor matches the target color and is unvisited
+
+                # Only visit the neighbor if it hasn't been visited and matches the target color 
                 if not neighbor_node.visited and neighbor_node.color == target_color:
-                    # Visit and color the neighbor only if it matches the target color
+                    # Visit the neighbor, mark it as visited, and color it
                     neighbor_node.visit_and_set_color(color)
                     neighbor_node.visited = True
-                    stack.push(neighbor)
 
+                    # Push the neighbor onto the stack to explore its neighbors next
+                    stack.push(neighbor)
+                    
+                    # Print the image after coloring each node
+                    self.print_image()
 
 def create_graph(data):
     """creates graph from read in data"""
