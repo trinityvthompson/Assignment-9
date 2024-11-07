@@ -251,12 +251,13 @@ class ImageGraph:
 
             for neighbor in current_node.edges:
                 neighbor_node = self.nodes[neighbor]
+
                 # Skip visiting the node if it does not match the target color
                 if not neighbor_node.visited and neighbor_node.color == target_color:
                     # Visit and color the neighbor only if it matches the target color
                     self.nodes[neighbor].visit_and_set_color(color)
-                    stack.push(neighbor)
                     self.print_image()
+                    stack.push(neighbor)
 
 def create_graph(data):
     # creates graph from read in data
