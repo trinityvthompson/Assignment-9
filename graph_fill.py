@@ -118,7 +118,6 @@ class Queue():
         """return the size of the queue"""
         return len(self.queue)
 
-# 
 class ColorNode:
     """
     class for a graph node; contains x and y coordinates, a color, a list of edges and
@@ -126,7 +125,7 @@ class ColorNode:
     it also contains a "previous color" attribute.
     This might be useful for your flood fill implementation.
     """
-    
+
     def __init__(self, index, x, y, color):
         """
         Input: x, y are the location of this pixel in the image
@@ -147,7 +146,8 @@ class ColorNode:
 
     def visit_and_set_color(self, color):
         """Input: color is the name of the color the node should be colored in;
-        the function also saves the previous color, might be useful for your flood fill implementation"""
+        the function also saves the previous color, might be useful for your 
+        flood fill implementation"""
         self.visited = True
         self.prev_color = self.color
         self.color = color
@@ -177,8 +177,8 @@ class ImageGraph:
 
     def reset_visited(self):
         """sets the visited flag to False for all nodes"""
-        for i in range(len(self.nodes)):
-            self.nodes[i].visited = False
+        for _, node in enumerate(self.nodes):
+            node.visited = False
 
     def print_adjacency_matrix(self):
         """Prints the adjacency matrix of the graph, showing connections between nodes."""
@@ -233,7 +233,7 @@ class ImageGraph:
                 # Process unvisited neighbors only
                 if not neighbor_node.visited and neighbor_node.color == target_color:
                     neighbor_node.visited = True # mark as visited
-                    neighbor_node.visit_and_set_color(color) # set neighbor's color 
+                    neighbor_node.visit_and_set_color(color) # set neighbor's color
                     queue.enqueue(neighbor_index) # add neighbor to queue for further exploration
 
                     # print image after each node is colored and processed
@@ -317,6 +317,7 @@ def create_graph(data):
 
 
 def main():
+    """Main function to read graph data, create graph, and perform search algorithms."""
     # read input
     data = sys.stdin.read()
 
