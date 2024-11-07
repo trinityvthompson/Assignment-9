@@ -194,6 +194,7 @@ class ImageGraph:
     def bfs(self, start_index, color):
         # reset visited status
         self.reset_visited()
+        target_color = self.nodes[start_index].color
 
         # intialize queue with the starting node and mark it as visited
         queue = Queue()
@@ -216,7 +217,7 @@ class ImageGraph:
                 neighbor_node = self.nodes[neighbor_index]
 
                 # Process unvisited neighbors only
-                if not neighbor_node.visited:
+                if not neighbor_node.visited and neighbor_node.color == target_color:
                     neighbor_node.visited = True # mark as visited
                     neighbor_node.visit_and_set_color(color) # set neighbor's color 
                     queue.enqueue(neighbor_index) # add neighbor to queue for further exploration
@@ -231,6 +232,7 @@ class ImageGraph:
     def dfs(self, start_index, color):
         # reset visited status
         self.reset_visited()
+        target_color = self.nodes[start_index].color
         # print initial state
         print("Starting DFS; initial state:")
         self.print_image()
@@ -248,14 +250,13 @@ class ImageGraph:
 
 
             for neighbor in current_node.edges:
+                neighbor_node = self.nodes[neighbor]
                 # Skip visiting the node if it does not match the target color
-                if current_node.color != color:
-                    continue
-                if not self.nodes[neighbor].visited:
+                if not neighbor_node.visited and neighbor_node.color == target_color:
                     # Visit and color the neighbor only if it matches the target color
                     self.nodes[neighbor].visit_and_set_color(color)
-                    self.print_image()
                     stack.push(neighbor)
+                    self.print_image()
 
 def create_graph(data):
     # creates graph from read in data
