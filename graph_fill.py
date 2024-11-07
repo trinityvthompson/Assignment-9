@@ -239,9 +239,12 @@ class ImageGraph:
 
         stack = Stack()
         stack.push(start_index)
-        self.nodes[start_index].visited = True
-        self.nodes[start_index].visit_and_set_color(color)
-        self.print_image()
+
+        initial_node = self.nodes[start_index]
+        initial_node.visited = True
+        if initial_node.color == color:
+          initial_node.visit_and_set_color(color)  # Color and mark as visited
+          self.print_image()
 
         # DFS traversal
         while not stack.is_empty():
