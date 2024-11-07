@@ -237,19 +237,21 @@ class ImageGraph:
 
         stack = Stack()
         stack.push(start_index)
+        self.nodes[start_index].visited = True
         self.nodes[start_index].visit_and_set_color(color)  # Color and mark as visited
         self.print_image()
 
         # DFS traversal
         while not stack.is_empty():
             current = stack.pop()
+            current_node = self.nodes[current]
 
-            # Skip visiting the node if it does not match the target color
-            if self.nodes[current].color != color:
-                continue
 
-            for neighbor in self.nodes[current].edges:
-                if not self.nodes[neighbor].visited and self.nodes[neighbor].color == color:
+            for neighbor in current_node.edges:
+                # Skip visiting the node if it does not match the target color
+                if current_node.color != color:
+                    continue
+                if not self.nodes[neighbor].visited:
                     # Visit and color the neighbor only if it matches the target color
                     self.nodes[neighbor].visit_and_set_color(color)
                     self.print_image()
