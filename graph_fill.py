@@ -1,7 +1,8 @@
 """
 # File: GraphFill.py
 
-#  Description:
+#  Description: Implements a graph traversal with color flood fill (BFS and DFS)
+for nodes in an image graph based on adjacency and target color.
 
 #  Student Name: Trinity Thompson
 
@@ -48,6 +49,7 @@ BLOCK_CHAR = "\u2588"
 #   color is the name of a color that is looked up in COLOR_DICT
 # Output: returns the string wrapped with the color code
 def colored(text, color):
+    """Returns input text wrapped in specified color"""
     color = color.strip().lower()
     if not color in COLOR_DICT:
         raise Exception(color + " is not a valid color!")
@@ -56,6 +58,7 @@ def colored(text, color):
 # Input: color is the name of a color that is looked up in COLOR_DICT
 # prints a block (two characters) in the specified color
 def print_block(color):
+    """Prints a block of color (two characters wide)"""
     print(colored(BLOCK_CHAR, color)*2, end='')
 
 # -----------------------PRINTING LOGIC, DON'T WORRY ABOUT THIS PART----------------------------
@@ -64,62 +67,71 @@ def print_block(color):
 
 # Stack class; you can use this for your search algorithms
 class Stack():
+    """Stack implementation for depth-first search traversal"""
     def __init__(self):
         self.stack = []
 
-  # add an item to the top of the stack
     def push(self, item):
+        """add an item to the top of the stack"""
         self.stack.append(item)
 
-  # remove an item from the top of the stack
     def pop(self):
+        """remove an item from the top of the stack"""
         return self.stack.pop()
 
-  # check the item on the top of the stack
+
     def peek(self):
+        """check the item on the top of the stack"""
         return self.stack[-1]
 
-  # check if the stack if empty
     def is_empty(self):
+        """check if the stack if empty"""
         return len(self.stack) == 0
 
-  # return the number of elements in the stack
     def size(self):
+        """return the number of elements in the stack"""
         return len(self.stack)
 
 # Queue class; you can use this for your search algorithms
 class Queue():
+    """Queue implementation for breadth-first search traversal"""
     def __init__(self):
         self.queue = []
 
-  # add an item to the end of the queue
     def enqueue(self, item):
+        """add an item to the end of the queue"""
         self.queue.append(item)
 
-  # remove an item from the beginning of the queue
     def dequeue(self):
+        """remove an item from the beginning of the queue"""
         return self.queue.pop(0)
 
-  # checks the item at the top of the Queue
     def peek(self):
+        """checks the item at the top of the Queue"""
         return self.queue[0]
 
-  # check if the queue is empty
     def is_empty(self):
+        """check if the queue is empty"""
         return len(self.queue) == 0
 
-  # return the size of the queue
     def size(self):
+        """return the size of the queue"""
         return len(self.queue)
 
-# class for a graph node; contains x and y coordinates, a color, a list of edges and
-# a flag signaling if the node has been visited (useful for serach algorithms)
-# it also contains a "previous color" attribute. 
-# This might be useful for your flood fill implementation.
+# 
 class ColorNode:
-    # Input: x, y are the location of this pixel in the image
-    #   color is the name of a color
+    """
+    class for a graph node; contains x and y coordinates, a color, a list of edges and
+    a flag signaling if the node has been visited (useful for serach algorithms)
+    it also contains a "previous color" attribute.
+    This might be useful for your flood fill implementation.
+    """
+    
     def __init__(self, index, x, y, color):
+        """
+        Input: x, y are the location of this pixel in the image
+        color is the name of a color
+        """
         self.index = index
         self.color = color
         self.prev_color = color
@@ -128,28 +140,28 @@ class ColorNode:
         self.edges = []
         self.visited = False
 
-    # Input: node_index is the index of the node we want to create an edge to in the node list
-    # adds an edge and sorts the list of edges
     def add_edge(self, node_index):
+        """Input: node_index is the index of the node we want to create an edge to in the node list
+        adds an edge and sorts the list of edges"""
         self.edges.append(node_index)
 
-    # Input: color is the name of the color the node should be colored in;
-    # the function also saves the previous color, might be useful for your flood fill implementation
     def visit_and_set_color(self, color):
+        """Input: color is the name of the color the node should be colored in;
+        the function also saves the previous color, might be useful for your flood fill implementation"""
         self.visited = True
         self.prev_color = self.color
         self.color = color
 
         print("Visited node " + str(self.index))
 
-# class that contains the graph
 class ImageGraph:
+    """Class that contains graph"""
     def __init__(self, image_size):
         self.nodes = []
         self.image_size = image_size
 
-    # prints the image formed by the nodes on the command line
     def print_image(self):
+        """Prints the image formed by the nodes on the command line"""
         img = [["black" for i in range(self.image_size)] for j in range(self.image_size)]
 
         # fill img array
@@ -163,18 +175,18 @@ class ImageGraph:
         # print new line/reset color
         print(RESET_CHAR)
 
-    # sets the visited flag to False for all nodes
     def reset_visited(self):
+        """sets the visited flag to False for all nodes"""
         for i in range(len(self.nodes)):
             self.nodes[i].visited = False
 
-    # implement your adjacency matrix printing here.
     def print_adjacency_matrix(self):
+        """Prints the adjacency matrix of the graph, showing connections between nodes."""
         print("Adjacency matrix:")
-        
+
         # Create a matrix initialized with 0s
         matrix = [[0] * len(self.nodes) for _ in range(len(self.nodes))]
-        
+
         # Fill in the matrix with edges
         for node in self.nodes:
             for edge in node.edges:
@@ -192,11 +204,13 @@ class ImageGraph:
     #   start_index is the index of the currently visited node
     #   color is the color to fill the area containing the current node with
     def bfs(self, start_index, color):
+        """Performs a breadth-first search (BFS) starting from given node index.
+        It colors the connected nodes with the target color."""
         # reset visited status
         self.reset_visited()
         target_color = self.nodes[start_index].color
 
-        # intialize queue with the starting node and mark it as visited
+        # intialize queue with the starting node's color and mark it as visited
         queue = Queue()
         queue.enqueue(start_index)
         self.nodes[start_index].visited = True
@@ -230,6 +244,8 @@ class ImageGraph:
     #   start_index is the index of the currently visited node
     #   color is the color to fill the area containing the current node with
     def dfs(self, start_index, color):
+        """Performs a depth-first search (DPS) starting from the given node index.
+        It colors the connected nodes with the target color."""
         # reset visited status
         self.reset_visited()
         target_color = self.nodes[start_index].color
@@ -237,6 +253,7 @@ class ImageGraph:
         print("Starting DFS; initial state:")
         self.print_image()
 
+        # Stack used for DFS due to LIFO nature
         stack = Stack()
         stack.push(start_index)
         self.nodes[start_index].visited = True
@@ -259,7 +276,7 @@ class ImageGraph:
                     self.print_image()
 
 def create_graph(data):
-    # creates graph from read in data
+    """creates graph from read in data"""
     data_list = data.split("\n")
 
     # get size of image, number of nodes
@@ -283,7 +300,7 @@ def create_graph(data):
     index += 1
 
     # create edges between nodes
-    for i in range(edge_count):
+    for _ in range(edge_count):
         # edge info has the format "fromIndex,toIndex"
         edge_info = data_list[index].split(",")
         # connect node 1 to node 2 and the other way around
