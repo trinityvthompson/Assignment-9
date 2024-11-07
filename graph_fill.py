@@ -248,7 +248,10 @@ class ImageGraph:
         It colors the connected nodes with the target color."""
         # reset visited status
         self.reset_visited()
+
+        # Define target color 
         target_color = self.nodes[start_index].color
+
         # print initial state
         print("Starting DFS; initial state:")
         self.print_image()
@@ -256,8 +259,10 @@ class ImageGraph:
         # Stack used for DFS due to LIFO nature
         stack = Stack()
         stack.push(start_index)
+
+        # Mark the following node as visited and set its color 
         self.nodes[start_index].visited = True
-        self.nodes[start_index].visit_and_set_color(color)  # Color and mark as visited
+        self.nodes[start_index].visit_and_set_color(color)
         self.print_image()
 
         # DFS traversal
@@ -271,10 +276,9 @@ class ImageGraph:
                 # Continue with DFS if neighbor matches the target color and is unvisited
                 if not neighbor_node.visited and neighbor_node.color == target_color:
                     # Visit and color the neighbor only if it matches the target color
-                    self.nodes[neighbor].visit_and_set_color(color)
+                    neighbor_node.visit_and_set_color(color)
                     neighbor_node.visited = True
                     stack.push(neighbor)
-                    self.print_image()
 
 
 def create_graph(data):
