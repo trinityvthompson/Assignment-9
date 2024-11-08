@@ -261,11 +261,11 @@ class ImageGraph:
         # Define the color of the starting node as the target color
         target_color = self.nodes[start_index].color
 
-        # Initialize the stack and start with the given node (# Stack used for DFS due to LIFO nature)
+        # Stack used for DFS due to LIFO nature
         stack = Stack()
         stack.push(start_index)
 
-        # Mark the following node as visited and change its color 
+        # Mark the following node as visited and change its color
         self.nodes[start_index].visit_and_set_color(color)
         self.nodes[start_index].visited = True
 
@@ -274,20 +274,26 @@ class ImageGraph:
 
         # DFS traversal
         while not stack.is_empty():
-            # Pop the current node from the stack 
+            # Pop the current node from the stack
             current = stack.pop()
             current_node = self.nodes[current]
 
-            if not current_node.visited:
-                if current_node.color == target_color:
-                    current_node.visit_and_set_color(color)
-                    self.print_image()
+            # If this node hasn't been visited and matches the target color
+            if not current_node.visited and current_node.color == target_color:
+                # Mark it as visited
                 current_node.visited = True
-            
+
+                # Color the node with the new color
+                current_node.visit_and_set_color(color)
+
+                # Print image after coloring each node that macthes the target color
+                self.print_image()
+
+            # Push all unvisited neighbors to the stack if they match the target color
             for neighbor in current_node.edges:
                 neighbor_node = self.nodes[neighbor]
-
-                if not neighbor_node.visited:
+                # Only push neighbors that have not been visited and match the target color
+                if not neighbor_node.visited and neighbor_node.color == target_color:
                     stack.push(neighbor)
             
 
