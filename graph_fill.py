@@ -206,6 +206,11 @@ class ImageGraph:
     def bfs(self, start_index, color):
         """Performs a breadth-first search (BFS) starting from given node index.
         It colors the connected nodes with the target color."""
+
+        # print initial state
+        print("Starting BFS; initial state:")
+        self.print_image()
+
         # reset visited status
         self.reset_visited()
         target_color = self.nodes[start_index].color
@@ -215,10 +220,6 @@ class ImageGraph:
         queue.enqueue(start_index)
         self.nodes[start_index].visited = True
         self.nodes[start_index].visit_and_set_color(color) # set the start node's color
-
-        # print initial state
-        print("Starting BFS; initial state:")
-        self.print_image()
 
         # countinue until all reachable nodes are processed
         while not queue.is_empty():
@@ -247,23 +248,26 @@ class ImageGraph:
         """Performs a depth-first search (DPS) starting from the given node index.
         It colors the connected nodes with the target color."""
 
+        # print initial state
+        print("Starting DFS; initial state:")
+        self.print_image()
+
         # reset visited status for all nodes before starting DFS
         self.reset_visited()
 
         # Define the color of the starting node as the target color
         target_color = self.nodes[start_index].color
 
-        # print initial state
-        print("Starting DFS; initial state:")
-        self.print_image()
-
         # Initialize the stack and start with the given node (# Stack used for DFS due to LIFO nature)
         stack = Stack()
         stack.push(start_index)
 
         # Mark the following node as visited and change its color 
-        self.nodes[start_index].visited = True
         self.nodes[start_index].visit_and_set_color(color)
+        self.nodes[start_index].visited = True
+
+        # Print the image after coloring the starting node
+        self.print_image()
 
         # DFS traversal
         while not stack.is_empty():
