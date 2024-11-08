@@ -221,6 +221,9 @@ class ImageGraph:
         self.nodes[start_index].visited = True
         self.nodes[start_index].visit_and_set_color(color) # set the start node's color
 
+        # Print the image after coloring the starting node
+        self.print_image()
+
         # countinue until all reachable nodes are processed
         while not queue.is_empty():
             # get the next node in the queue
