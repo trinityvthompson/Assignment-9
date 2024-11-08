@@ -282,8 +282,8 @@ class ImageGraph:
                 # Only visit the neighbor if it hasn't been visited and matches the target color 
                 if not neighbor_node.visited and neighbor_node.color == target_color:
                     # Visit the neighbor, mark it as visited, and color it
-                    neighbor_node.visit_and_set_color(color)
                     neighbor_node.visited = True
+                    neighbor_node.visit_and_set_color(color)
 
                     # Push the neighbor onto the stack to explore its neighbors next
                     stack.push(neighbor)
