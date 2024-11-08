@@ -253,6 +253,10 @@ class ImageGraph:
         # Define the color of the starting node as the target color
         target_color = self.nodes[start_index].color
 
+        # print initial state
+        print("Starting DFS; initial state:")
+        self.print_image()
+
         # Initialize the stack and start with the given node (# Stack used for DFS due to LIFO nature)
         stack = Stack()
         stack.push(start_index)
@@ -261,29 +265,27 @@ class ImageGraph:
         self.nodes[start_index].visited = True
         self.nodes[start_index].visit_and_set_color(color)
 
-        # print initial state
-        print("Starting DFS; initial state:")
-        self.print_image()
-
         # DFS traversal
         while not stack.is_empty():
-            # Pop the current node from the stack
-            current = stack[-1]
+            # Pop the current node from the stack 
+            current = stack.pop()
             current_node = self.nodes[current]
 
-            unvisited_neighbors = [n for n in current_node.edges if not self.nodes[n].visited and self.nodes[n].color == target_color]
+            # Traverse each neighbor of the current node 
+            for neighbor in current_node.edges:
+                neighbor_node = self.nodes[neighbor]
 
-            if unvisited_neighbors:
-                next_node = unvisited_neighbors[0]
+                # Only visit the neighbor if it hasn't been visited and matches the target color 
+                if not neighbor_node.visited and neighbor_node.color == target_color:
+                    # Visit the neighbor, mark it as visited, and color it
+                    neighbor_node.visit_and_set_color(color)
+                    neighbor_node.visited = True
 
-                self.nodes[next_node].visited = True
-                self.nodes[next_node].visit_and_set_color(color)
+                    # Push the neighbor onto the stack to explore its neighbors next
+                    stack.push(neighbor)
 
-                stack.append(next_node)
-
-                self.print_image
-            else:
-                stack.pop()
+                    # Print the image after coloring each node
+                    self.print_image()
             
 
 def create_graph(data):
