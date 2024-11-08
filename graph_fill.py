@@ -295,7 +295,7 @@ class ImageGraph:
                 # Only push neighbors that have not been visited and match the target color
                 if not neighbor_node.visited and neighbor_node.color == target_color:
                     stack.push(neighbor)
-            
+
 
 def create_graph(data):
     """creates graph from read in data"""
