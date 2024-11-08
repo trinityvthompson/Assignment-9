@@ -278,16 +278,22 @@ class ImageGraph:
             current = stack.pop()
             current_node = self.nodes[current]
 
-            if not current_node.visited:
-                if current_node.color == target_color:
-                    current_node.visit_and_set_color(color)
-                    self.print_image()
+            # If this node hasn't been visited and matches the target color
+            if not current_node.visited and current_node.color == target_color:
+                # Mark it as visited
                 current_node.visited = True
+
+                # Color the node with the new color
+                current_node.visit_and_set_color(color)
+                
+                # Print image after coloring each node that macthes the target color
+                self.print_image()
             
+            # Push all unvisited neighbors to the stack if they match the target color
             for neighbor in current_node.edges:
                 neighbor_node = self.nodes[neighbor]
-
-                if not neighbor_node.visited:
+                # Only push neighbors that have not been visited and match the target color
+                if not neighbor_node.visited and neighbor_node.color == target_color:
                     stack.push(neighbor)
             
 
