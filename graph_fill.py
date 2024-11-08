@@ -52,7 +52,7 @@ def colored(text, color):
     """Returns input text wrapped in specified color"""
     color = color.strip().lower()
     if not color in COLOR_DICT:
-        raise Exception(color + " is not a valid color!")
+        raise ValueError(color + " is not a valid color!")
     return COLOR_DICT[color] + text
 
 # Input: color is the name of a color that is looked up in COLOR_DICT
