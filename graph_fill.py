@@ -275,21 +275,17 @@ class ImageGraph:
             current = stack.pop()
             current_node = self.nodes[current]
 
-            # Traverse each neighbor of the current node 
+            if not current_node.visited:
+                if current_node.color == target_color:
+                    current_node.visit_and_set_color(color)
+                    self.print_image()
+                current_node.visited = True
+            
             for neighbor in current_node.edges:
                 neighbor_node = self.nodes[neighbor]
 
-                # Only visit the neighbor if it hasn't been visited and matches the target color 
-                if not neighbor_node.visited and neighbor_node.color == target_color:
-                    # Visit the neighbor, mark it as visited, and color it
-                    neighbor_node.visited = True
-                    neighbor_node.visit_and_set_color(color)
-
-                    # Push the neighbor onto the stack to explore its neighbors next
+                if not neighbor_node.visited:
                     stack.push(neighbor)
-
-                    # Print the image after coloring each node
-                    self.print_image()
             
 
 def create_graph(data):
