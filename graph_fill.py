@@ -253,14 +253,6 @@ class ImageGraph:
         # Define the color of the starting node as the target color
         target_color = self.nodes[start_index].color
 
-        # Skip if the start node is already the target color 
-        if target_color == color:
-            return 
-
-        # print initial state
-        print("Starting DFS; initial state:")
-        self.print_image()
-
         # Initialize the stack and start with the given node (# Stack used for DFS due to LIFO nature)
         stack = Stack()
         stack.push(start_index)
@@ -269,21 +261,26 @@ class ImageGraph:
         self.nodes[start_index].visited = True
         self.nodes[start_index].visit_and_set_color(color)
 
+        # print initial state
+        print("Starting DFS; initial state:")
+        self.print_image()
+
         # DFS traversal
         while not stack.is_empty():
-            # Pop the current node from the stack 
+            # Pop the current node from the stack
             current = stack.pop()
             current_node = self.nodes[current]
 
-            # Traverse each neighbor of the current node 
-            for neighbor in current_node.edges:
+            # Traverse each neighbor of the current node
+            
+            for neighbor in reversed(current_node.edges):
                 neighbor_node = self.nodes[neighbor]
 
                 # Only visit the neighbor if it hasn't been visited and matches the target color 
                 if not neighbor_node.visited and neighbor_node.color == target_color:
                     # Visit the neighbor, mark it as visited, and color it
-                    neighbor_node.visit_and_set_color(color)
                     neighbor_node.visited = True
+                    neighbor_node.visit_and_set_color(color)
 
                     # Push the neighbor onto the stack to explore its neighbors next
                     stack.push(neighbor)
